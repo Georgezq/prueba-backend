@@ -3,12 +3,12 @@ version: '3.8'
 services:
   db:
     image: postgres:16
-    container_name: postgres_prueba
+    container_name: postgres_productos
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "postgres"
-      POSTGRES_DB: prueba_bd
+      POSTGRES_DB: productos_bd
     ports:
       - "5440:5432"
     
