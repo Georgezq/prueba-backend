@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16
+    container_name: postgres_prueba
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: prueba_bd
+    ports:
+      - "5440:5432"
+    
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
