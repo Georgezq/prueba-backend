@@ -3,6 +3,7 @@ using Prueba.Domain.Entities;
 using Prueba.Domain.Repositories;
 using Prueba.Shared;
 using Prueba.Shared.Data;
+using System.Linq.Dynamic.Core;
 
 namespace Prueba.Infrastructure.Repository
 {
@@ -24,10 +25,17 @@ namespace Prueba.Infrastructure.Repository
         {
             var query = _context.Productos.AsQueryable();
 
-            if(!string.IsNullOrWhiteSpace(productoFilter.Nombre))
+            if(!string.IsNullOrWhiteSpace(productoFilter.Global))
             {
-                query = query.Where(u => u.Nombre!.Contains(productoFilter.Nombre));
+                query = query.Where(p => p.Nombre!.ToLower().Contains(productoFilter.Global.ToLower()));
             }
+
+            if (!string.IsNullOrWhiteSpace(productoFilter.SortField))
+            {
+                var direction = productoFilter.SortOrder == 1 ? "ascending" : "descending";
+                query = query.OrderBy($"{productoFilter.SortField} {direction}");            
+            }
+
 
             var total = await query.CountAsync();
 
