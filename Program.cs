@@ -1,10 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using Prueba.Shared.Data;
-using Prueba.Infrastructure.Conf;
+using Prueba.Infraestructure.Conf;
+using Prueba.Infraestructure.Confi;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationServices();
+builder.Services.AddApplicationServicesBodega();
 builder.Services.AddControllers();
 
 builder.Services.AddCors(options => options.AddPolicy("AllowAngular", policy => policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod()));
