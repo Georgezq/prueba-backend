@@ -7,5 +7,6 @@ namespace Prueba.Domain.Entities
         public double Precio { get; set; }
         public int Stock { get; set; }
         public string? Categoria { get; set; }
+      
     }
 }

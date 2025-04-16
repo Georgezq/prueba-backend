@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Prueba.Application.UseCases;
 using Prueba.Domain.Entities;
+using Prueba.Shared;
+using Prueba.Shared.Data;
 
 namespace Prueba.Infrastructure.Controllers
 {
@@ -13,30 +16,25 @@ namespace Prueba.Infrastructure.Controllers
         private readonly ELiminarProducto _eLiminarProducto;
         private readonly CrearProducto _crearProducto;
         private readonly ActualizarProducto _actualizarProducto;
+        private readonly ListarProductosPaginacion _listarProductosPaginacion;
 
 
-        public ProductoController(ListarProductos listarProductos, ELiminarProducto eLiminarProducto, CrearProducto crearProducto, ActualizarProducto actualizarProducto)
+        public ProductoController(ListarProductos listarProductos, ELiminarProducto eLiminarProducto, CrearProducto crearProducto, ActualizarProducto actualizarProducto, ListarProductosPaginacion listarProductosPaginacion)
         {
             _listarProductos = listarProductos;
             _eLiminarProducto = eLiminarProducto;
             _crearProducto = crearProducto;
             _actualizarProducto = actualizarProducto;
+            _listarProductosPaginacion = listarProductosPaginacion;
         }
         
-        [HttpGet]
-        public async Task<IActionResult> GetAllProductos()
-        {
-            try
-            {
-                var productos = await _listarProductos.ExecuteAsync();
-                return Ok(productos);        
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Error", error = ex.Message });                
-            }
-        }
 
+        [HttpGet]
+        public async Task<ActionResult<PageList<Producto>>> GetProductos([FromQuery] ProductoFilter filtro)
+        {
+            var result = await _listarProductosPaginacion.EjecutarAsync(filtro);
+            return Ok(result);
+        }
 
         [HttpPost("create")]
         public async Task<IActionResult> CreateProducto(Producto producto)

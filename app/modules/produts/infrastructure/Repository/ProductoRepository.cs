@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Prueba.Domain.Entities;
 using Prueba.Domain.Repositories;
+using Prueba.Shared;
 using Prueba.Shared.Data;
 
 namespace Prueba.Infrastructure.Repository
@@ -17,6 +18,30 @@ namespace Prueba.Infrastructure.Repository
         public async Task<IEnumerable<Producto?>> GetAllProductoAsync()
         {
             return await _context.Productos.ToListAsync();
+        }
+
+        public async Task<PageList<Producto>> GetProductosAsync(ProductoFilter productoFilter)
+        {
+            var query = _context.Productos.AsQueryable();
+
+            if(!string.IsNullOrWhiteSpace(productoFilter.Nombre))
+            {
+                query = query.Where(u => u.Nombre!.Contains(productoFilter.Nombre));
+            }
+
+            var total = await query.CountAsync();
+
+            var data = await query
+            .Skip((productoFilter.Page - 1) * productoFilter.PageSize)
+            .Take(productoFilter.PageSize)
+            .ToListAsync();
+
+            return new PageList<Producto>
+            {
+                Data = data,
+                TotalCount = total
+            };
+
         }
 
         public async Task<Producto?> GetProductoByIdAsync(int id)
