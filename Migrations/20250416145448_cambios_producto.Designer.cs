@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Prueba.Shared.Data;
@@ -11,9 +12,11 @@ using Prueba.Shared.Data;
 namespace prueba_backend.Migrations
 {
     [DbContext(typeof(ProductosDbContext))]
-    partial class ProductosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250416145448_cambios_producto")]
+    partial class cambios_producto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

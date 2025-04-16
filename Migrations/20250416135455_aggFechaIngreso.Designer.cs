@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Prueba.Shared.Data;
@@ -11,9 +12,11 @@ using Prueba.Shared.Data;
 namespace prueba_backend.Migrations
 {
     [DbContext(typeof(ProductosDbContext))]
-    partial class ProductosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250416135455_aggFechaIngreso")]
+    partial class aggFechaIngreso
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,7 +55,7 @@ namespace prueba_backend.Migrations
                     b.Property<int?>("BodegaId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime?>("FechaIngreso")
+                    b.Property<DateTime>("FechaIngreso")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Nombre")
@@ -73,9 +76,11 @@ namespace prueba_backend.Migrations
 
             modelBuilder.Entity("Prueba.Domain.Entities.Producto", b =>
                 {
-                    b.HasOne("Prueba.Domain.Entities.Bodega", null)
+                    b.HasOne("Prueba.Domain.Entities.Bodega", "Bodega")
                         .WithMany("Producto")
                         .HasForeignKey("BodegaId");
+
+                    b.Navigation("Bodega");
                 });
 
             modelBuilder.Entity("Prueba.Domain.Entities.Bodega", b =>
