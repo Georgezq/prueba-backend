@@ -7,6 +7,4 @@ public class ProductoFilter
     public string? SortField { get; set; }
     public int SortOrder { get; set; }
 
-    public string? Nombre { get; set; }
-    public int Precio { get; set; }
 }
