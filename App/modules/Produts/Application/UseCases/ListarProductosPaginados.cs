@@ -4,11 +4,11 @@ using Prueba.Shared;
 
 namespace Prueba.Application.UseCases;
 
-public class ListarProductosPaginacion
+public class ListarProductosPaginados
 {
     private readonly IProductoRepository _productoRepository;
 
-    public ListarProductosPaginacion(IProductoRepository productoRepository)
+    public ListarProductosPaginados(IProductoRepository productoRepository)
     {
         _productoRepository = productoRepository;
     }

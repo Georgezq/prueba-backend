@@ -14,7 +14,7 @@ namespace Prueba.Infraestructure.Conf
             services.AddScoped<CrearProducto>();
             services.AddScoped<ListarProductos>();
             services.AddScoped<ActualizarProducto>();
-            services.AddScoped<ListarProductosPaginacion>();
+            services.AddScoped<ListarProductosPaginados>();
             services.AddScoped<ELiminarProducto>();
          }
 

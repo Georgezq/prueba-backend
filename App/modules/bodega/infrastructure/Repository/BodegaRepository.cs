@@ -62,24 +62,32 @@ namespace Prueba.Infraestructure.Repository
         public async Task<Bodega> UpdateBodegaAsync(Bodega bodega)
         {
             var existingBodega = await _context.Bodegas.FindAsync(bodega.Id);
-            if (existingBodega == null)
+            if (existingBodega != null)
             {
-            throw new KeyNotFoundException($"Bodega with ID {bodega.Id} not found.");
+                _context.Entry(existingBodega).CurrentValues.SetValues(bodega);
+                await _context.SaveChangesAsync();
+                return existingBodega;
             }
 
-            _context.Entry(existingBodega).CurrentValues.SetValues(bodega);
-            await _context.SaveChangesAsync();
-            return existingBodega;
+            throw new KeyNotFoundException($"Bodega with ID {bodega.Id} not found.");
         }
 
         public async Task DeleteBodegaAsync(int id)
         {
             var bodega = await _context.Bodegas.FindAsync(id);
-            if (bodega != null)
+            if (bodega == null)
             {
-                _context.Bodegas.Remove(bodega);
-                await _context.SaveChangesAsync();
+                throw new KeyNotFoundException($"Bodega with ID {id} not found.");
             }
+
+            var hasReferences = await _context.Productos.AnyAsync(x => x.BodegaId == id); // Replace 'SomeOtherTable' and 'BodegaId' with actual table and column names
+            if (hasReferences)
+            {
+                throw new InvalidOperationException($"Cannot delete Bodega with ID {id} because it is referenced by other records.");
+            }
+
+            _context.Bodegas.Remove(bodega);
+            await _context.SaveChangesAsync();
         }
 
 

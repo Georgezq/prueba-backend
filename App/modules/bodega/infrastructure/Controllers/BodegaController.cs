@@ -59,12 +59,20 @@ namespace Prueba.Infraestructure.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBodega(int id, [FromBody] Bodega bodega){
-            if(id != bodega.Id)
+        public async Task<IActionResult> UpdateBodega(int id, [FromBody] Bodega bodega)
+        {
+            try
+            {
+            if (id != bodega.Id)
                 return BadRequest("Las id no coinciden");
 
             var bodegaUpdated = await _actualizarBodega.ExecuteAsync(bodega);
             return Ok(bodegaUpdated);
+            }
+            catch (Exception ex)
+            {
+            return StatusCode(500, new { message = "Error", error = ex.Message });
+            }
         }
 
         [HttpDelete("{id}")]

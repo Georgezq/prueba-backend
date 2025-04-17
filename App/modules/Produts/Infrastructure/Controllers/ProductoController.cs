@@ -14,23 +14,23 @@ namespace Prueba.Infraestructure.Controllers
         private readonly ELiminarProducto _eLiminarProducto;
         private readonly CrearProducto _crearProducto;
         private readonly ActualizarProducto _actualizarProducto;
-        private readonly ListarProductosPaginacion _listarProductosPaginacion;
+        private readonly ListarProductosPaginados _listarProductosPaginados;
 
 
-        public ProductoController(ListarProductos listarProductos, ELiminarProducto eLiminarProducto, CrearProducto crearProducto, ActualizarProducto actualizarProducto, ListarProductosPaginacion listarProductosPaginacion)
+        public ProductoController(ListarProductos listarProductos, ELiminarProducto eLiminarProducto, CrearProducto crearProducto, ActualizarProducto actualizarProducto, ListarProductosPaginados listarProductosPaginados)
         {
             _listarProductos = listarProductos;
             _eLiminarProducto = eLiminarProducto;
             _crearProducto = crearProducto;
             _actualizarProducto = actualizarProducto;
-            _listarProductosPaginacion = listarProductosPaginacion;
+            _listarProductosPaginados = listarProductosPaginados;
         }
         
 
         [HttpGet]
         public async Task<ActionResult<PageList<Producto>>> GetProductos([FromQuery] ProductoFilter filtro)
         {
-            var result = await _listarProductosPaginacion.EjecutarAsync(filtro);
+            var result = await _listarProductosPaginados.EjecutarAsync(filtro);
             return Ok(result);
         }
 
