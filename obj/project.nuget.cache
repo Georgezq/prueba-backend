@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "vwR/8iAzGe5e6jAfnIW6TQGPzfhK8e1TwdUt2BuX968DRMY45hKPNA3PaYNLxsUkco9P0nKZNKV2QrTXrq6Nlg==",
+  "dgSpecHash": "1Pl6cI8VN1mX0op6VAvrxsOfVv1UyUEKfmxN4jbP/2BNuM2knbIpszieMCz8CiMbPsEakZ+titKw7kA+lQY2hw==",
   "success": true,
   "projectFilePath": "/home/george/Documentos/Proyectos/prueba-backend/prueba-backend/prueba-backend.csproj",
   "expectedPackageFiles": [
@@ -49,6 +49,7 @@
     "/home/george/.nuget/packages/system.composition.typedparts/7.0.0/system.composition.typedparts.7.0.0.nupkg.sha512",
     "/home/george/.nuget/packages/system.diagnostics.diagnosticsource/9.0.4/system.diagnostics.diagnosticsource.9.0.4.nupkg.sha512",
     "/home/george/.nuget/packages/system.io.pipelines/9.0.4/system.io.pipelines.9.0.4.nupkg.sha512",
+    "/home/george/.nuget/packages/system.linq.dynamic.core/1.6.0.2/system.linq.dynamic.core.1.6.0.2.nupkg.sha512",
     "/home/george/.nuget/packages/system.reflection.metadata/7.0.0/system.reflection.metadata.7.0.0.nupkg.sha512",
     "/home/george/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "/home/george/.nuget/packages/system.text.encodings.web/9.0.4/system.text.encodings.web.9.0.4.nupkg.sha512",
