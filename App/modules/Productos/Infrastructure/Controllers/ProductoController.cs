@@ -68,7 +68,7 @@ namespace Prueba.Infraestructure.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] ActualizarProductoDTO producto){
+        public async Task<IActionResult> UpdateProducto(int id, [FromBody] ActualizarProductoDTO producto){
             try
             {
                 if(id != producto.Id)
