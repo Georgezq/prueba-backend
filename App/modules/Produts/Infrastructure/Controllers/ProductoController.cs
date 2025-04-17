@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Prueba.Application.UseCases;
+using Prueba.Domain.DTO;
 using Prueba.Domain.Entities;
+using Prueba.Domain.Exceptions;
 using Prueba.Shared;
 
 namespace Prueba.Infraestructure.Controllers
@@ -30,27 +32,63 @@ namespace Prueba.Infraestructure.Controllers
         [HttpGet]
         public async Task<ActionResult<PageList<Producto>>> GetProductos([FromQuery] ProductoFilter filtro)
         {
-            var result = await _listarProductosPaginados.EjecutarAsync(filtro);
-            return Ok(result);
+            try
+            {
+                var result = await _listarProductosPaginados.EjecutarAsync(filtro);
+                return Ok(result);
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, new { message = "Error interno", error = ex.Message });
+            }
         }
 
         [HttpPost("create")]
         public async Task<IActionResult> CreateProducto(Producto producto)
         {
+            try
+            {
                 if (producto == null)
                     return BadRequest("Datos invalidos");
 
                 var createProducto = await _crearProducto.ExecuteAsync(producto);
                 return CreatedAtAction(nameof(CreateProducto), new { id = createProducto.Id }, createProducto);
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch(Exception ex){
+                return StatusCode(500, new { message = "Error interno", error = ex.Message });
+            }  
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] Producto producto){
-            if(id != producto.Id)
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] ActualizarProductoDTO producto){
+            try
+            {
+                if(id != producto.Id)
                 return BadRequest("Las id no coinciden");
 
-            var productoUpdated = await _actualizarProducto.ExecuteAsync(producto);
-            return Ok(productoUpdated);
+                var productoUpdated = await _actualizarProducto.ExecuteAsync(producto);
+                return Ok(productoUpdated);
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch(NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, new { message = "Error interno", error = ex.Message });
+            }
         }
 
         [HttpDelete("{id}")]
@@ -60,6 +98,10 @@ namespace Prueba.Infraestructure.Controllers
             {
                 await _eliminarProducto.ExecuteAsync(id);
                 return Ok();        
+            }
+            catch(NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
             }
             catch (Exception ex)
             {

@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Prueba.Domain.Entities;
 using Prueba.Domain.Repositories;
 
@@ -14,8 +15,14 @@ public class CrearProducto
 
     public async Task<Producto> ExecuteAsync(Producto producto)
     {
-         var createProducto = await _productoRepository.CreateProductoAsync(producto);
-         return createProducto;
+        if (string.IsNullOrWhiteSpace(producto.Nombre))
+            throw new ValidationException("El nombre del producto es requerido.");
+
+        if (producto.Precio <= 0)
+            throw new ValidationException("El precio del producto debe ser mayor a 0.");
+
+        var createdProducto = await _productoRepository.CreateProductoAsync(producto);
+        return createdProducto;
     }
 
 }

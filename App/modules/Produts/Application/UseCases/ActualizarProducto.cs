@@ -1,5 +1,6 @@
 using Prueba.Domain.DTO;
 using Prueba.Domain.Entities;
+using Prueba.Domain.Exceptions;
 using Prueba.Domain.Repositories;
 
 namespace Prueba.Application.UseCases;
@@ -17,7 +18,7 @@ public class ActualizarProducto
     {
         if(dto.Id <= 0)
         {
-            throw new ArgumentNullException("ID de producto invalido");
+            throw new NotFoundException($"Producto con ID {dto.Id} no encontrado.");
         }
 
         var producto = new Producto
