@@ -3,11 +3,11 @@ using Prueba.Domain.Repositories;
 
 namespace Prueba.Application.UseCases;
 
-public class ELiminarProducto
+public class EliminarProducto
 {
     private readonly IProductoRepository _productoRepository;
 
-    public ELiminarProducto(IProductoRepository productoRepository)
+    public EliminarProducto(IProductoRepository productoRepository)
     {
         _productoRepository = productoRepository;
     }
