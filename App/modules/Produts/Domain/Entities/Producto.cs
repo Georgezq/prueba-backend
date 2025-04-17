@@ -7,6 +7,6 @@ namespace Prueba.Domain.Entities
         public double Precio { get; set; }
         public int Stock { get; set; }
         public DateTime? FechaIngreso { get; set; }
-        public int? BodegaId { get; set; }
+        public int BodegaId { get; set; }
     }
 }

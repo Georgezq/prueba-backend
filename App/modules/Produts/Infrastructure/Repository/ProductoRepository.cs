@@ -36,6 +36,16 @@ namespace Prueba.Infraestructure.Repository
                 query = query.OrderBy($"{productoFilter.SortField} {direction}");            
             }
 
+            if(productoFilter.TypeBodega != null && productoFilter.TypeBodega.Any())
+            {
+                query = query.Where(p => productoFilter.TypeBodega.Contains(p.BodegaId));
+            }
+
+            if(productoFilter.FechaIngresada.HasValue)
+            {
+                query = query.Where(p => p.FechaIngreso < productoFilter.FechaIngresada.Value);
+            }
+
 
             var total = await query.CountAsync();
 

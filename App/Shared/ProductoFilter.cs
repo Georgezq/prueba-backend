@@ -5,5 +5,7 @@ public class ProductoFilter
     public string? Global { get; set; }
     public string? SortField { get; set; }
     public int SortOrder { get; set; }
+    public List<int>? TypeBodega { get; set; }
+    public DateTime? FechaIngresada { get; set; }
 
 }
