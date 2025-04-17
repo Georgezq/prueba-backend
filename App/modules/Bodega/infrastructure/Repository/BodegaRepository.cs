@@ -69,7 +69,7 @@ namespace Prueba.Infraestructure.Repository
                 return existingBodega;
             }
 
-            throw new KeyNotFoundException($"Bodega with ID {bodega.Id} not found.");
+            throw new KeyNotFoundException($"Bodega con ID {bodega.Id} no encontrada.");
         }
 
         public async Task DeleteBodegaAsync(int id)
@@ -77,13 +77,13 @@ namespace Prueba.Infraestructure.Repository
             var bodega = await _context.Bodegas.FindAsync(id);
             if (bodega == null)
             {
-                throw new KeyNotFoundException($"Bodega with ID {id} not found.");
+                throw new KeyNotFoundException($"Bodega con ID {id} no encontrada.");
             }
 
-            var hasReferences = await _context.Productos.AnyAsync(x => x.BodegaId == id); // Replace 'SomeOtherTable' and 'BodegaId' with actual table and column names
+            var hasReferences = await _context.Productos.AnyAsync(x => x.BodegaId == id);
             if (hasReferences)
             {
-                throw new InvalidOperationException($"Cannot delete Bodega with ID {id} because it is referenced by other records.");
+                throw new InvalidOperationException($"No se puede eliminar la Bodega con ID {id} porque está referenciada en otra tabla.");
             }
 
             _context.Bodegas.Remove(bodega);
