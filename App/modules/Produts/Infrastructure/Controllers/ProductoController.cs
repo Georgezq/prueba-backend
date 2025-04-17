@@ -11,16 +11,16 @@ namespace Prueba.Infraestructure.Controllers
     public class ProductoController : ControllerBase
     {
         private readonly ListarProductos _listarProductos;
-        private readonly ELiminarProducto _eLiminarProducto;
+        private readonly EliminarProducto _eliminarProducto;
         private readonly CrearProducto _crearProducto;
         private readonly ActualizarProducto _actualizarProducto;
         private readonly ListarProductosPaginados _listarProductosPaginados;
 
 
-        public ProductoController(ListarProductos listarProductos, ELiminarProducto eLiminarProducto, CrearProducto crearProducto, ActualizarProducto actualizarProducto, ListarProductosPaginados listarProductosPaginados)
+        public ProductoController(ListarProductos listarProductos, EliminarProducto eliminarProducto, CrearProducto crearProducto, ActualizarProducto actualizarProducto, ListarProductosPaginados listarProductosPaginados)
         {
             _listarProductos = listarProductos;
-            _eLiminarProducto = eLiminarProducto;
+            _eliminarProducto = eliminarProducto;
             _crearProducto = crearProducto;
             _actualizarProducto = actualizarProducto;
             _listarProductosPaginados = listarProductosPaginados;
@@ -58,7 +58,7 @@ namespace Prueba.Infraestructure.Controllers
         {
             try
             {
-                await _eLiminarProducto.ExecuteAsync(id);
+                await _eliminarProducto.ExecuteAsync(id);
                 return Ok();        
             }
             catch (Exception ex)
